@@ -15,7 +15,8 @@ describe('login route', () => {
 
   afterAll(async () => {
     await closeTestDatabase();
-  }, 30000);
+  });
+
   it('should be return 401 to unexistent user', async () => {
     const response = await request(app).post('/user/login').send({
       email,
@@ -23,6 +24,7 @@ describe('login route', () => {
     });
     expect(response.status).toBe(401);
   });
+
   it('should not be possible to register user with a invalid password', async () => {
     const response = await request(app)
       .post('/user/register')
@@ -32,6 +34,7 @@ describe('login route', () => {
       });
     expect(response.status).toBe(400);
   });
+
   it('should not be possible to register user with a invalid email', async () => {
     const response = await request(app)
       .post('/user/register')
@@ -41,6 +44,7 @@ describe('login route', () => {
       });
     expect(response.status).toBe(400);
   });
+
   it('should not be possible to register user without firstName', async () => {
     const response = await request(app)
       .post('/user/register')
@@ -50,6 +54,7 @@ describe('login route', () => {
       });
     expect(response.status).toBe(400);
   });
+
   it('should not be possible to register user without lastName', async () => {
     const response = await request(app)
       .post('/user/register')
@@ -59,6 +64,7 @@ describe('login route', () => {
       });
     expect(response.status).toBe(400);
   });
+
   it('should not be possible to register user without email', async () => {
     const response = await request(app)
       .post('/user/register')
@@ -68,6 +74,7 @@ describe('login route', () => {
       });
     expect(response.status).toBe(400);
   });
+
   it('should not be possible to register user without password', async () => {
     const response = await request(app)
       .post('/user/register')
@@ -77,10 +84,9 @@ describe('login route', () => {
       });
     expect(response.status).toBe(400);
   });
+
   it('should be possible register a user', async () => {
-    const response = await request(app)
-      .post('/user/register')
-      .send({ ...testUser, id: null });
+    const response = await request(app).post('/user/register').send(testUser);
     const { body } = response;
     expect(response.status).toBe(200);
     expect(body).toHaveProperty('token');
@@ -88,10 +94,12 @@ describe('login route', () => {
     expect(body.userData).toHaveProperty('firstName');
     expect(body.userData).toHaveProperty('id');
   });
+
   it('should not be possible register a existent user', async () => {
     const response = await request(app).post('/user/register').send(testUser);
     expect(response.status).toBe(409);
   });
+
   it('should be possible login a user', async () => {
     const response = await request(app).post('/user/login').send({
       email,
@@ -104,6 +112,7 @@ describe('login route', () => {
     expect(body.userData).toHaveProperty('id');
     expect(body.userData).toHaveProperty('firstName');
   });
+
   it('should not be possible to login user with a wrong password', async () => {
     const response = await request(app).post('/user/login').send({
       email,
@@ -111,6 +120,7 @@ describe('login route', () => {
     });
     expect(response.statusCode).toBe(401);
   });
+
   it('should not be possible to login user with a wrong email', async () => {
     const response = await request(app).post('/user/login').send({
       email: 'wrong@email.com',

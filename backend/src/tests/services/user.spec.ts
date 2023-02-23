@@ -12,7 +12,7 @@ describe('Testing database functions', () => {
   }, 30000);
   afterAll(async () => {
     await closeTestDatabase();
-  }, 30000);
+  });
   it('should be possible to create a user', async () => {
     const response = await userServices.createUser(testUser);
     expect(response?.id).toBeTruthy();
@@ -20,7 +20,6 @@ describe('Testing database functions', () => {
   it('should be possible to get a user', async () => {
     const response = await userServices.getUser(email);
     expect(response?.id).toBeTruthy();
-    testUser.id = 1;
   });
   it('should be possible to delete a user', async () => {
     await userServices.deleteUser(testUser.email);

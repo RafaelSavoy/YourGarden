@@ -9,7 +9,6 @@ const sequelize = new Sequelize('test', 'root', 'password', {
 });
 
 const testUser: User = {
-  id: null,
   firstName: 'Test',
   lastName: 'User',
   email: 'test@example.com',
@@ -21,8 +20,9 @@ async function initTestDatabase() {
   sequelize.addModels([UserModel]);
 }
 async function closeTestDatabase() {
-  await UserModel.destroy({ truncate: true });
-  await sequelize.close();
+  await UserModel.destroy({ truncate: true, where: {} });
+  await sequelize.close()
+  console.log('Banco de dados de teste limpo');
 }
 
 export { testUser, initTestDatabase, closeTestDatabase };

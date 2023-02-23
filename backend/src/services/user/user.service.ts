@@ -4,7 +4,6 @@ import { getUserData } from './getUserData';
 import { createUser } from './createUser';
 
 interface User {
-  id?: number | null;
   firstName: string;
   lastName: string;
   email: string;

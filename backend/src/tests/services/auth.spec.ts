@@ -13,7 +13,7 @@ describe('Testing auth services', () => {
   }, 30000);
   afterAll(async () => {
     await closeTestDatabase();
-  }, 30000);
+  });
   it('should not be possible login a nonexistent user', () => {
     expect(
       async () => await authServices.login({ email, password })
