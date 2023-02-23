@@ -15,5 +15,7 @@ export default {
     sourceType: 'module'
   },
   plugins: ['@typescript-eslint'],
-  rules: {}
+  rules: {
+    'function-spacing': ['error', 'aways']
+  }
 };

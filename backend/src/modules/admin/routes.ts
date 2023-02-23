@@ -1,5 +1,5 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-const adminRouter = Router()
+const adminRouter = Router();
 
-adminRouter.get("remove-post", )
+adminRouter.get('remove-post');

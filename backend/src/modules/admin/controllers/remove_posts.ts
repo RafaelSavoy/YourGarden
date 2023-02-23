@@ -1,5 +1,3 @@
-import * as jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken';
 
-export function verifyToken(){
-    
-}
+export function verifyToken() {}
