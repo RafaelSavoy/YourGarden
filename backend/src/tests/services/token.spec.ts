@@ -2,11 +2,11 @@ import { tokenServices } from '../../services/token/token.services';
 import { testUser } from '../../utils/test.utils';
 
 describe('testing token service', () => {
-  const { firstName, lastName } = testUser;
+  const { firstName, lastName, email } = testUser;
   let token: string;
   it('should be create a token', async () => {
     const createdToken = await tokenServices.createToken({
-      id: 123123123123,
+      email,
       firstName,
       lastName
     });
@@ -15,7 +15,7 @@ describe('testing token service', () => {
   });
   it('should be possible validate token', async () => {
     const payload = await tokenServices.verifyToken(token);
-    expect(payload).toHaveProperty('id');
+    expect(payload).toHaveProperty('email');
     expect(payload).toHaveProperty('firstName');
     expect(payload).toHaveProperty('lastName');
     expect(payload).toHaveProperty('iat');

@@ -3,18 +3,20 @@ import { PRIVATE } from '../../utils/config';
 import { HTTPError } from '../errors/httpError';
 
 interface CreateTokenProps {
-  id: number;
+  email: string;
   firstName: string;
   lastName: string;
 }
 
 export async function createToken({
-  id,
+  email,
   firstName,
   lastName
 }: CreateTokenProps) {
   try {
-    return jwt.sign({ id, firstName, lastName }, PRIVATE, { expiresIn: '1d' });
+    return jwt.sign({ email, firstName, lastName }, PRIVATE, {
+      expiresIn: '1d'
+    });
   } catch (e) {
     console.log(
       'Erro ao criar token, verifique se a chave PRIVATE está configurada.'

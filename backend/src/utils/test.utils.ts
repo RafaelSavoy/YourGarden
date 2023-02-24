@@ -20,8 +20,12 @@ async function initTestDatabase() {
   await sequelize.sync({ force: true });
 }
 async function closeTestDatabase() {
-  await UserModel.destroy({ truncate: true });
-  await sequelize.close()
+  await UserModel.destroy({
+    truncate: true,
+    where: {}
+  });
+  await sequelize.dropSchema('test', { logging: false });
+  await sequelize.close();
   console.log('Banco de dados de teste limpo');
 }
 

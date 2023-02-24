@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcrypt');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -33,8 +34,24 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false
+      },
+      role: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'user'
       }
     });
+    await queryInterface.bulkInsert('users', [
+      {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'admin@admin.com',
+        password: bcrypt.hashSync('admin123senha', 10),
+        role: 'admin',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ]);
     await queryInterface.createTable('products', {
       id: {
         type: Sequelize.INTEGER,
@@ -51,7 +68,7 @@ module.exports = {
         allowNull: false
       },
       image: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
         allowNull: false
       },
       createdAt: {
