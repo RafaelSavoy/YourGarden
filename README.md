@@ -73,6 +73,7 @@ Esse é um projeto desenvolvido utilizando as tecnologias Node.js, React, Sequel
       - Adicionar as funcionalidades da aba comunidade;
       - Criar painel do administrador 
       - Repensar interface
+      - Adicionar foto especifica para cada produto
 
 # Considerações:
 
