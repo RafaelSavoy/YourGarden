@@ -10,6 +10,8 @@ interface LoginResponseProps {
   userData: {
     firstName: string;
     lastName: string;
+    email: string;
+    role: string;
   };
   token: string;
 }
@@ -17,5 +19,6 @@ interface LoginResponseProps {
 export async function login(
   loginRequest: LoginRequestProps
 ): Promise<LoginResponseProps> {
-  return await api.post('/user/login', loginRequest);
+  const response = await api.post('/user/login', loginRequest);
+  return await response.data;
 }

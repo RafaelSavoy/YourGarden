@@ -2,16 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, Input, SubmitButton, FormError } from '../';
+import { Form, Input, SubmitButton, FormError } from '..';
 import { Link } from 'react-router-dom';
 
 interface RegisterProps {
-  onRegister: (
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string
-  ) => void;
+  onRegister: (formData: FormData) => void;
   formError: {
     status: boolean;
     message: string;
@@ -45,7 +40,7 @@ const RegisterComponent: React.FC<RegisterProps> = ({
   });
 
   const onSubmit = (data: FormData) => {
-    onRegister(data.firstName, data.lastName, data.email, data.password);
+    onRegister(data);
   };
 
   return (

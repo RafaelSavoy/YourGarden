@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { UseFormHandleSubmit } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../contexts/UserContext';
 import { FormTitle } from './FormTitle';
 
 interface FormProps {
@@ -9,6 +11,15 @@ interface FormProps {
 }
 
 const Form = ({ children, onSubmit, title }: FormProps) => {
+  const { user } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.logged) {
+      navigate('/store');
+    }
+  }, []);
+
   return (
     <form
       onSubmit={onSubmit}

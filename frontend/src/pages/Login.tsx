@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginComponent } from '../components/AuthComponents/Login/LoginComponent';
+import { LoginComponent } from '../components/AuthComponents/Login/Login.component';
 import { useUser } from '../contexts/UserContext';
 import { authServices } from '../services/auth/authServices';
 
@@ -12,22 +12,24 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+
   async function onLogin(email: string, password: string) {
     try {
       const response = await authServices.login({ email, password });
-      const { firstName, lastName } = response.userData;
-      updateUser(firstName, lastName, response.token);
+      updateUser({ ...response.userData, logged: true }, response.token);
       navigate('/store');
     } catch (err: any) {
-      setFormError({ status: true, message: err.response.data.msg });
+      const message = err.response
+        ? err.response.data.message
+        : 'Erro ao se conectar com o servidor, contate um administrador.';
+      setFormError({
+        status: true,
+        message
+      });
     }
   }
 
-  return (
-    <div>
-      <LoginComponent onLogin={onLogin} formError={formError} />
-    </div>
-  );
+  return <LoginComponent onLogin={onLogin} formError={formError} />;
 };
 
 export default Login;

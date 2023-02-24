@@ -1,63 +1,79 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { api } from '../api/axiosConfig';
+import React, { createContext, useContext, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
-interface User {
+export interface User {
   firstName: string;
   lastName: string;
+  email: string;
+  role: string;
+  logged: boolean;
+}
+interface UserUpdate {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  logged: boolean;
 }
 
-interface UserContextData {
-  user: User | null;
-  updateUser: (firstName: string, lastName: string, token: string) => void;
-  clearUser: () => void;
-}
+type UserContextType = {
+  user: User;
+  updateUser: (user: UserUpdate, token: string) => void;
+  resetUser: () => void;
+  getUserToken: () => string | undefined;
+  setUserToken: (token: string) => void;
+};
 
-const UserContext = createContext<UserContextData>({
-  user: null,
-  updateUser: () => {},
-  clearUser: () => {}
-});
-
-
-interface UserProviderProps {
+type UserProviderType = {
   children: React.ReactNode;
-}
-function UserProvider({ children }: UserProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+};
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+const defaultValues: UserUpdate = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  logged: false,
+  role: ''
+};
 
-    if (token) {
-      api
-        .get('/user', { headers: { Authorization: `Bearer ${token}` } })
-        .then((response) => {
-          const { userData, token } = response.data;
-          updateUser(userData.firstName, userData.lastName, token);
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-        });
-    }
-  }, []);
+export const UserContext = createContext({} as UserContextType);
 
-  const updateUser = (firstName: string, lastName: string, token: string) => {
-    localStorage.setItem('token', token);
-    setUser({ firstName, lastName });
-  };
+export const UserProvider = ({ children }: UserProviderType) => {
+  const [user, setUser] = useState<User>(defaultValues);
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const navigate = useNavigate();
 
-  const clearUser = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-  };
+  function updateUser(user: UserUpdate, token: string): void {
+    const { firstName, lastName, email, role } = user;
+    setUser({ firstName, lastName, email, role, logged: true });
+    setCookie('token', token);
+  }
+  function resetUser() {
+    setUser({
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: '',
+      logged: false
+    });
+    removeCookie('token');
+    navigate('/store');
+  }
+  function getUserToken(): string | undefined {
+    return cookies.token;
+  }
+  function setUserToken(token: string): void {
+    setCookie('token', token);
+  }
 
   return (
-    <UserContext.Provider value={{ user, updateUser, clearUser }}>
+    <UserContext.Provider
+      value={{ user, updateUser, resetUser, getUserToken, setUserToken }}
+    >
       {children}
     </UserContext.Provider>
   );
-}
+};
 
-const useUser = () => useContext(UserContext);
-
-export { UserProvider, useUser };
+export const useUser = (): UserContextType => useContext(UserContext);

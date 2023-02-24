@@ -11,6 +11,8 @@ interface RegisterResponseProps {
   userData: {
     firstName: string;
     lastName: string;
+    email: string;
+    role: string;
   };
   token: string;
 }
@@ -18,5 +20,6 @@ interface RegisterResponseProps {
 export async function register(
   registerRequest: RegisterRequestProps
 ): Promise<RegisterResponseProps> {
-  return await api.post('/user/register', registerRequest);
+  const response = await api.post('/user/register', registerRequest);
+  return await response.data;
 }

@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Form, Input, SubmitButton,FormError } from '../';
-import { Section } from 'react-scroll-section';
+import { Form, Input, SubmitButton, FormError } from '..';
+import { Link } from 'react-router-dom';
 
 interface LoginProps {
   onLogin: (email: string, password: string) => void;
@@ -39,7 +39,7 @@ const LoginComponent: React.FC<LoginProps> = ({ onLogin, formError }) => {
   };
 
   return (
-    <Section
+    <section
       id="login"
       className="flex justify-center items-center h-screen bg-green-500"
     >
@@ -59,9 +59,12 @@ const LoginComponent: React.FC<LoginProps> = ({ onLogin, formError }) => {
             labelText="Senha"
           />
         </div>
+        <p>
+          Não tem uma conta? <Link to={'/register'}>Cadastre-se</Link>
+        </p>
         <SubmitButton value={'Entrar'} />
       </Form>
-    </Section>
+    </section>
   );
 };
 
