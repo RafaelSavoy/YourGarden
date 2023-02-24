@@ -2,7 +2,7 @@
 
 Esse é um projeto desenvolvido utilizando as tecnologias Node.js, React, Sequelize e MySQL. Ele consiste em uma loja web com foco de venda de plantas com uma aba de comunidade para as pessoas interagirem pedindo dicas e opiniões sobre suas plantas adquiridas.
 
-Ferramentas Utilizadas no Backend
+# Ferramentas Utilizadas no Backend
 
     Node.js
     Sequelize: ORM utilizado para facilitar o uso do Mysql, permitindo criar Modelos, um incrível sistema de versionamento de banco de dados e diversas         outras funcionacidades
@@ -35,6 +35,11 @@ Ferramentas Utilizadas no Backend
     ##Inicie o servidor:
     
     npm run start:dev
+    
+# Ferramentas Utilizadas no frontend
+
+    React
+    Vite
 
 # Configurando o Frontend
 
