@@ -16,11 +16,11 @@ const testUser: User = {
 };
 
 async function initTestDatabase() {
-  await sequelize.sync({ force: true });
   sequelize.addModels([UserModel]);
+  await sequelize.sync({ force: true });
 }
 async function closeTestDatabase() {
-  await UserModel.destroy({ truncate: true, where: {} });
+  await UserModel.destroy({ truncate: true });
   await sequelize.close()
   console.log('Banco de dados de teste limpo');
 }
