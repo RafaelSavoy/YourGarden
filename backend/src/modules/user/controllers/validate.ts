@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { authServices } from '../../../services/auth/auth.services';
 
-export async function register(req: Request, res: Response) {
+export async function validate(req: Request, res: Response) {
+  const token = req.headers.authorization?.split(' ')[1];
   try {
-    const response = await authServices.register(req.body);
+    const response = await authServices.validate(token);
     res.status(200).json(response);
   } catch (e: any) {
     res

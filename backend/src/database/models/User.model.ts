@@ -69,6 +69,13 @@ class UserModel extends Model<
   })
   password!: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: 'user'
+  })
+  role!: string | null;
+
   // Defina os métodos do modelo como métodos da classe
   async checkPassword(password: string): Promise<boolean> {
     return await passwordServices.checkPassword(password, this.password);

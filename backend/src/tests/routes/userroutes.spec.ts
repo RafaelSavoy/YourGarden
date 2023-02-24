@@ -91,8 +91,10 @@ describe('login route', () => {
     expect(response.status).toBe(200);
     expect(body).toHaveProperty('token');
     expect(body).toHaveProperty('userData');
-    expect(body.userData).toHaveProperty('firstName');
     expect(body.userData).toHaveProperty('id');
+    expect(body.userData).toHaveProperty('firstName');
+    expect(body.userData).toHaveProperty('lastName');
+    expect(body.userData).toHaveProperty('email');
   });
 
   it('should not be possible register a existent user', async () => {
@@ -111,6 +113,8 @@ describe('login route', () => {
     expect(body).toHaveProperty('userData');
     expect(body.userData).toHaveProperty('id');
     expect(body.userData).toHaveProperty('firstName');
+    expect(body.userData).toHaveProperty('lastName');
+    expect(body.userData).toHaveProperty('email');
   });
 
   it('should not be possible to login user with a wrong password', async () => {
@@ -126,6 +130,11 @@ describe('login route', () => {
       email: 'wrong@email.com',
       password
     });
+    expect(response.statusCode).toBe(401);
+  });
+
+  it('should not be possible to validate user without token', async () => {
+    const response = await request(app).get('/user/');
     expect(response.statusCode).toBe(401);
   });
 });
