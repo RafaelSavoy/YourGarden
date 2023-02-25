@@ -24,7 +24,13 @@ const schema = yup.object().shape({
   firstName: yup.string().required('Primeiro nome é obrigatório'),
   lastName: yup.string().required('Ultimo nome é obrigatório'),
   email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().required('Password is required')
+  password: yup
+    .string()
+    .required('Insira a senha')
+    .matches(
+      /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/,
+      'A senha deve ter pelo menos 6 caracteres, incluindo letras e números.'
+    )
 });
 
 const RegisterComponent: React.FC<RegisterProps> = ({

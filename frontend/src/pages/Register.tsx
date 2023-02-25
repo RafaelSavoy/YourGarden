@@ -26,7 +26,7 @@ const Register = () => {
       navigate('/community');
     } catch (err: any) {
       const message = err.response
-        ? err.response.data.message
+        ? err.response.data.msg
         : 'Erro ao se conectar com o servidor, contate um administrador.';
       setFormError({
         status: true,
