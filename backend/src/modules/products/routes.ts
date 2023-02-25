@@ -5,16 +5,16 @@ import {
   editProduct,
   deleteProduct
 } from './controllers/';
-import { verifyPermissionMiddleware } from '../admin/middlewares/adminVerifiyMiddleware';
+import { verifyAdmin } from '../../services/middlewares/verifyAdmin';
 
 const productRoutes = Router();
 
 productRoutes.get('/', getProducts);
 
-productRoutes.post('/create', verifyPermissionMiddleware, createProduct);
+productRoutes.post('/create', verifyAdmin, createProduct);
 
-productRoutes.put('/:id', verifyPermissionMiddleware, editProduct);
+productRoutes.put('/:id', verifyAdmin, editProduct);
 
-productRoutes.delete('/:id', verifyPermissionMiddleware, deleteProduct);
+productRoutes.delete('/:id', verifyAdmin, deleteProduct);
 
 export { productRoutes };
