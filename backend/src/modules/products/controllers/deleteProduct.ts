@@ -4,8 +4,7 @@ import { productService } from '../../../services/products/products.service';
 export async function deleteProduct(req: Request, res: Response) {
   const { id } = req.params;
   try {
-    const response = await productService.deleteProduct(Number(id));
-    console.log(response);
+    await productService.deleteProduct(Number(id));
     res.status(200).json({ message: 'Produto deletado com sucesso' });
   } catch (e: any) {
     res.status(e.code || 500).json({

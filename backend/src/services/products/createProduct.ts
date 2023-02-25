@@ -1,15 +1,18 @@
 import { ProductModel } from '../../database/models/Product.model';
 import { HTTPError } from '../errors/httpError';
 
-export async function createProduct(name: string, price: number, image: string): Promise<ProductModel> {
-  try{
-    return await ProductModel.create({
-    name,
-    price,
-    image
-  });
-  }catch(e){
-    console.log(e)
+interface CreateProductRequest {
+  name: string;
+  price: number;
+  image: string;
+}
+
+export async function createProduct(
+  productData: CreateProductRequest
+): Promise<ProductModel> {
+  try {
+    return await ProductModel.create(productData);
+  } catch (e) {
     throw new HTTPError('Erro interno ao criar produto', 500);
   }
 }

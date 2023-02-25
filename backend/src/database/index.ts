@@ -6,4 +6,4 @@ const sequelize = new Sequelize(dbConfig);
 
 sequelize.addModels([UserModel, ProductModel]);
 
-export { sequelize, UserModel };
+export { sequelize, UserModel, ProductModel};

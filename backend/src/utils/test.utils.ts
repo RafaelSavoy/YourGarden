@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import { UserModel } from '../database';
+import { UserModel, ProductModel } from '../database';
 import { User } from '../services/user/user.service';
 
 const sequelize = new Sequelize('test', 'root', 'password', {
@@ -16,11 +16,15 @@ const testUser: User = {
 };
 
 async function initTestDatabase() {
-  sequelize.addModels([UserModel]);
+  sequelize.addModels([UserModel, ProductModel]);
   await sequelize.sync({ force: true });
 }
 async function closeTestDatabase() {
   await UserModel.destroy({
+    truncate: true,
+    where: {}
+  });
+  await ProductModel.destroy({
     truncate: true,
     where: {}
   });
