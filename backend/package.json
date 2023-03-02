@@ -7,7 +7,8 @@
     "test:prepare": "NODE_ENV=test sequelize db:create --config=src/database/config/database.js",
     "test": "jest",
     "start:dev": "tsx watch ./src/server.ts",
-    "prettier": "prettier --write \"**/*.{js,jsx,json,css,md,ts}\""
+    "prettier": "prettier --write \"**/*.{js,jsx,json,css,md,ts}\"",
+    "start": "tsx ./src/server.ts"
   },
   "keywords": [],
   "author": "",
